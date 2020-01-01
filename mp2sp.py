@@ -6,19 +6,11 @@ player_data_end_offset = 5
 playerdat_start_offset = 3
 
 savesdir = os.getenv("APPDATA") + "/.minecraft/saves/"
-saves = os.listdir(savesdir)
-saves_tmp = saves[:]
-
-# Remove non folders:
-for save in saves_tmp:
-	if os.path.isfile(savesdir + save):
-		saves.remove(save)
+saves = [save for save in os.listdir(savesdir) if not os.path.isfile(savesdir + save)]
 
 # Print worlds (folders):
-i = 1
-for save in saves:
-	print("{:>3}".format(i) + ": " + save)
-	i = i + 1
+for save, i in zip(saves, range(len(saves))):
+	print("{:>3}".format(i + 1) + ": " + save)
 
 # Select world:
 world = saves[int(input("\nEnter the world number: ")) - 1]
@@ -29,10 +21,8 @@ playerpath = levelpath + "/playerdata/"
 
 # Print players found:
 players = os.listdir(playerpath)
-i = 1
-for player in players:
-	print("{:>3}".format(i) + ": " + player)
-	i = i + 1
+for player, i in zip(players, range(len(players))):
+	print("{:>3}".format(i + 1) + ": " + player)
 
 # Select player:
 player = players[int(input("\nEnter the player number: ")) - 1]
