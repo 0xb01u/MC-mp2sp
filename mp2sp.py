@@ -6,7 +6,7 @@ player_data_end_offset = 5
 playerdat_start_offset = 3
 
 savesdir = os.getenv("APPDATA") + "/.minecraft/saves/"
-saves = [save for save in os.listdir(savesdir) if not os.path.isfile(savesdir + save)]
+saves = [save for save in os.listdir(savesdir) if not os.path.isfile(savesdir + save) and os.path.exists(savesdir + save + "/level.dat")]
 
 # Print worlds (folders):
 for save, i in zip(saves, range(len(saves))):
@@ -30,12 +30,12 @@ print("\nSelected: " + player)
 
 # Open .dats
 playerdat = gzip.open(playerpath + player, "r").read()
-# playerdec = open(playerpath + player[:-4] + "_dec.txt", "wb")
-# playerdec.write(playerdat)
+#playerdec = open(playerpath + player[:-4] + "_dec.txt", "wb")
+#playerdec.write(playerdat)
 
 leveldat = bytearray(gzip.open(levelpath + "/level.dat", "r").read())
-# leveldec = open(levelpath + "/level_dec.txt", "wb")
-# leveldec.write(leveldat)
+#leveldec = open(levelpath + "/level_dec.txt", "wb")
+#leveldec.write(leveldat)
 
 # Substitute level.dat section with the player .dat
 player_data_start = leveldat.find(bytearray(b"Player")) + 6
