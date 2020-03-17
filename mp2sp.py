@@ -2,7 +2,7 @@
 
 import os, gzip, json, urllib.request as url
 
-player_data_end_offset = 1
+player_data_end_offset = 5
 playerdat_start_offset = 3
 
 nbt = lambda file: bytearray(gzip.open(file, "r").read())
@@ -17,7 +17,7 @@ for save, i in zip(saves, range(len(saves))):
 
 # Select world:
 world = saves[int(input("\nEnter the world number: ")) - 1]
-
+ 
 levelpath = savesdir + world
 playerpath = levelpath + "/playerdata/"
 
@@ -45,7 +45,7 @@ leveldat = nbt(levelpath + "/level.dat")
 
 # Substitute level.dat section with the player .dat
 player_data_start = leveldat.find(bytearray(b"Player")) + 6
-player_data_end = leveldat.find(bytearray(b"seenCredits")) + 11 + player_data_end_offset
+player_data_end = leveldat.find(bytearray(b"foodTickTimer")) + 13 + player_data_end_offset
 
 #print(str(player_data_start) + " - " + str(player_data_end))
 new_leveldat = leveldat[:player_data_start] + playerdat[playerdat_start_offset:] + leveldat[player_data_end:]
